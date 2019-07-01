@@ -8,6 +8,11 @@ export default class Cart extends Component {
         return total.toFixed(2);
     }
 
+    getItemTotal(qty, price) {
+        const total = qty * price;
+        return total.toFixed(2);
+    }
+
     render(props) {
         return (
             <div>
@@ -15,7 +20,7 @@ export default class Cart extends Component {
                     <div>
                         <div className="item">{item.name} - ${item.price} ea.</div>
                         <div className="qty">Qty: {item.quantity}</div>
-                        <div className="total">Item total: ${item.quantity * item.price}</div>
+                        <div className="total">Item total: ${this.getItemTotal(item.quantity, item.price)}</div>
                         <hr/>
                     </div>
                 ))}
