@@ -1,5 +1,5 @@
 import { h, Component } from "preact";
-import Cart from './Cart';
+import Cart from './cart';
 import "./style.scss";
 
 export default class App extends Component {
