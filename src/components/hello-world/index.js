@@ -80,7 +80,7 @@ export default class App extends Component {
         return (
             <div>
                 {JSON.stringify(this.state.items)}
-                <h1 style={{ color: props.color }}>Hello, World!</h1>
+                <h1>Hello, World!</h1>
             </div>
         );
     }
