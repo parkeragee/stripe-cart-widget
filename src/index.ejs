@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget Template</title>
+
+  <style>
+    .preview {
+      width: 100%;
+      max-width: 1100px;
+      margin: 80px auto;
+      border: 1px dashed rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .preview::before {
+      content: 'WIDGET PREVIEW';
+      position: absolute;
+      display: block;
+      top: -18px;
+      font-size: 11px;
+      color: rgba(0, 0, 0, 0.5);
+    }
+  </style>
+
+</head>
+
+<body>
+  <div>
+    <h4>Duffer Mug</h4>
+    <button data-cart-add="sku_FMERwGkceHkMVu">+ Add to cart</button>
+    <button data-cart-sku-remove="sku_FMERwGkceHkMVu">- Remove from cart</button>
+  </div>
+  <div>
+    <h4>Duffins Bakers Mug</h4>
+    <button data-cart-add="sku_FMESRRgSAnIgJi">+ Add to cart</button>
+    <button data-cart-remove="sku_FMESRRgSAnIgJi">- Remove from cart</button>
+  </div>
+
+  <hr />
+
+  <button data-cart-checkout>Checkout</button>
+  <button data-cart-empty>Empty cart</button>
+
+  <div data-cart-host="sully" class="preview">
+    <script type="text/props">
+    { "color": "blue", "stripeKey": "pk_live_KsJECrnmyMe4vf6s7SlUZYQO" }
+    </script>
+  </div>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script async src="/bundle.js"></script>
+</body>
+
+</html>
