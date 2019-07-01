@@ -74,12 +74,13 @@ export default class App extends Component {
     }
 
     handleCheckout() {
+        const { stripeKey, cancelUrl, successUrl } = this.props;
         const items = this.state.items.map(item => { return { sku: item.sku, quantity: item.quantity } });
         const stripe = Stripe(this.props.stripeKey);
         stripe.redirectToCheckout({
             items,
-            successUrl: 'https://preact-widget-netlify.com/success',
-            cancelUrl: 'https://preact-widget-netlify.com/cancel',
+            successUrl,
+            cancelUrl,
         }).then((result) => {
             return alert(result.error.message);
         });
