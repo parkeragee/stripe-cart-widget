@@ -13,10 +13,11 @@
       margin: 80px auto;
       border: 1px dashed rgba(0, 0, 0, 0.2);
       position: relative;
+      padding: 20px;
     }
 
     .preview::before {
-      content: 'WIDGET PREVIEW';
+      content: 'SHOPPING CART PREVIEW';
       position: absolute;
       display: block;
       top: -18px;
@@ -30,12 +31,24 @@
 <body>
   <div>
     <h4>Duffer Mug</h4>
-    <button data-cart-add="sku_FMERwGkceHkMVu">+ Add to cart</button>
-    <button data-cart-sku-remove="sku_FMERwGkceHkMVu">- Remove from cart</button>
+
+    <button
+      data-cart-add="sku_FMERwGkceHkMVu"
+      data-cart-price="120.22"
+      data-cart-name="Duffer Mug">
+      + Add to cart
+    </button>
+
+    <button data-cart-remove="sku_FMERwGkceHkMVu">- Remove from cart</button>
   </div>
   <div>
     <h4>Duffins Bakers Mug</h4>
-    <button data-cart-add="sku_FMESRRgSAnIgJi">+ Add to cart</button>
+    <button
+      data-cart-add="sku_FMESRRgSAnIgJi"
+      data-cart-price="128.55"
+      data-cart-name="Duffins Bakers Mug">
+      + Add to cart
+    </button>
     <button data-cart-remove="sku_FMESRRgSAnIgJi">- Remove from cart</button>
   </div>
 

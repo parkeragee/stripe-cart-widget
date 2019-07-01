@@ -1,4 +1,5 @@
 import { h, Component } from "preact";
+import Cart from './Cart';
 import "./style.scss";
 
 export default class App extends Component {
@@ -9,14 +10,22 @@ export default class App extends Component {
     }
 
     componentDidMount() {
-        const buttons = document.querySelectorAll('[data-cart-add]');
-        const removeButtons = document.querySelectorAll('[data-cart-add-remove]');
+        const addButtons = document.querySelectorAll('[data-cart-add]');
+        const removeButtons = document.querySelectorAll('[data-cart-remove]');
         const checkoutButton = document.querySelector('[data-cart-checkout]');
         const emptyButton = document.querySelector('[data-cart-empty]');
+
         checkoutButton.addEventListener('click', () => this.handleCheckout());
         emptyButton.addEventListener('click', () => this.emptyCart());
-        buttons.forEach(elem => elem.addEventListener('click', () => this.handleShoppingCartClick(elem.getAttribute('data-cart-add'))));
-        removeButtons.forEach(elem => elem.addEventListener('click', () => this.handleRemoveFromShoppingCartClick(elem.getAttribute('data-cart-add-remove'))));
+        addButtons.forEach(elem => elem.addEventListener('click', () => {
+            this.handleShoppingCartClick(
+                elem.getAttribute('data-cart-add'),
+                parseInt(elem.getAttribute('data-cart-price'), 10).toFixed(2),
+                elem.getAttribute('data-cart-name'),
+            )
+        }));
+        removeButtons.forEach(elem => elem.addEventListener('click', () => this.handleRemoveFromShoppingCartClick(elem.getAttribute('data-cart-remove'))));
+
         const initialState = localStorage.getItem('items');
         initialState !== null ? this.setState({ items: JSON.parse(initialState) }) : false;
     }
@@ -26,8 +35,8 @@ export default class App extends Component {
         return this._decrementQuantity(productIndex);
     }
 
-    handleShoppingCartClick(productId) {
-        const item = { sku: productId, quantity: 1 };
+    handleShoppingCartClick(productId, productPrice, productName) {
+        const item = { sku: productId, quantity: 1, price: productPrice, name: productName };
         const productIndex = this.state.items.findIndex(item => item.sku === productId);
         return productIndex > -1 ? this._incrementQuantity(productIndex) : this._addToCart(item);
     }
@@ -65,9 +74,10 @@ export default class App extends Component {
     }
 
     handleCheckout() {
+        const items = this.state.items.map(item => { return { sku: item.sku, quantity: item.quantity } });
         const stripe = Stripe(this.props.stripeKey);
         stripe.redirectToCheckout({
-            items: this.state.items,
+            items,
             successUrl: 'https://preact-widget-netlify.com/success',
             cancelUrl: 'https://preact-widget-netlify.com/cancel',
         }).then((result) => {
@@ -77,10 +87,10 @@ export default class App extends Component {
 
 
     render(props) {
+        const { items } = this.state;
         return (
             <div>
-                {JSON.stringify(this.state.items)}
-                <h1>Hello, World!</h1>
+                <Cart items={items} />
             </div>
         );
     }
