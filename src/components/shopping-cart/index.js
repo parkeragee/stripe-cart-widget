@@ -3,8 +3,6 @@ import Cart from './cart';
 import styles from "./style.scss";
 import cx from 'classnames';
 
-console.log(styles);
-
 export default class App extends Component {
 
     constructor() {
