@@ -74,6 +74,7 @@
     border-left: none;
     cursor: pointer;
     color: #FFF;
+    font-size: 12px;
 }
 
 .sullycartQtyRemove {
@@ -85,9 +86,11 @@
     border-right: none;
     cursor: pointer;
     color: #FFF;
+    font-size: 12px;
 }
 
 .sullycartQtyCount {
     border: 1px solid;
-    padding: 4px;
+    padding: 4px 12px;
+    font-size: 12px;
 }
