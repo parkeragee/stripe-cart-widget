@@ -5,6 +5,11 @@
     border-radius: 3px;
 }
 
+.sullycartContainer {
+    max-height: calc(100vh - 50%);
+    overflow-y: auto;
+}
+
 .sullycartWrapper {
     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
     -webkit-font-smoothing: antialiased;

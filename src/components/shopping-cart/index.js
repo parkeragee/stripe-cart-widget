@@ -111,6 +111,12 @@ export default class App extends Component {
         });
     }
 
+    getCartTotal() {
+        const { items } = this.state;
+        const total = items.length > 0 ? items.reduce((previous, item) => previous + (item.price * item.quantity), 0) : 0;
+        return total.toFixed(2);
+    }
+
 
     render(props) {
         const { items, isCartShowing } = this.state;
@@ -124,6 +130,7 @@ export default class App extends Component {
                             addToCart={this.handleShoppingCartClick}
                             removeFromCart={this.handleRemoveFromShoppingCartClick}
                             items={items} />
+                        <div className="cart-total"><b>Total: ${this.getCartTotal()}</b></div>
                         <button onClick={() => this.handleCheckout()} style={{backgroundColor: props.buttonColor}} className={styles.sullycartCheckoutBtn}>Proceed to checkout</button>
                         <span onClick={() => this.handleHidecart()} className={styles.sullycartCloseCart}>Close cart</span>
                     </div>

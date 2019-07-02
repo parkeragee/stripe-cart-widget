@@ -3,11 +3,6 @@ import styles from "./style.scss";
 
 export default class Cart extends Component {
 
-    getCartTotal() {
-        const total = this.props.items.length > 0 ? this.props.items.reduce((previous, item) => previous + (item.price * item.quantity), 0) : 0;
-        return total.toFixed(2);
-    }
-
     getItemTotal(qty, price) {
         const total = qty * price;
         return total.toFixed(2);
@@ -15,7 +10,7 @@ export default class Cart extends Component {
 
     render(props) {
         return (
-            <div>
+            <div className={styles.sullycartContainer}>
                 {props.items.map(item => (
                     <div className={styles.sullycartItem}>
                         <div className={styles.sullycartItemName}>{item.name}</div>
@@ -27,7 +22,6 @@ export default class Cart extends Component {
                         </div>
                     </div>
                 ))}
-                <div className="cart-total"><b>Total: ${this.getCartTotal()}</b></div>
             </div>
         );
     }
