@@ -5,14 +5,14 @@
   "main": "dist/index.js",
   "umd:main": "dist/index.umd.js",
   "module": "dist/index.m.js",
-  "source": "components/hello-world/index.js",
+  "source": "components/shopping-cart/index.js",
   "scripts": {
     "test": "NODE_ENV=test jest",
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
     "build": "preact build --no-prerender --clean --template src/index.ejs --service-worker false",
     "serve": "npm run build && preact serve",
     "dev": "preact watch --template src/index.ejs",
-    "dist": "microbundle --entry src/components/hello-world/index.js",
+    "dist": "microbundle --entry src/components/shopping-cart/index.js",
     "deploy": "npm run build && netlify deploy --prod --dir build"
   },
   "keywords": [],
@@ -31,6 +31,7 @@
     "sass-loader": "^6.0.6"
   },
   "dependencies": {
+    "classnames": "^2.2.6",
     "preact": "^8.2.5",
     "preact-compat": "^3.17.0",
     "preact-habitat": "^3.1.0",

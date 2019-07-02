@@ -1,22 +1,36 @@
 import { h, Component } from "preact";
 import Cart from './cart';
-import "./style.scss";
+import styles from "./style.scss";
+import cx from 'classnames';
+
+console.log(styles);
 
 export default class App extends Component {
 
     constructor() {
         super();
-        this.state.items = [];
+        this.state = {
+            items: [],
+            isCartShowing: false,
+        };
+        this.handleShoppingCartClick = this.handleShoppingCartClick.bind(this);
+        this.handleRemoveFromShoppingCartClick = this.handleRemoveFromShoppingCartClick.bind(this);
     }
 
     componentDidMount() {
         const addButtons = document.querySelectorAll('[data-cart-add]');
         const removeButtons = document.querySelectorAll('[data-cart-remove]');
-        const checkoutButton = document.querySelector('[data-cart-checkout]');
+        const showcartButton = document.querySelector('[data-cart-show]');
         const emptyButton = document.querySelector('[data-cart-empty]');
 
-        checkoutButton.addEventListener('click', () => this.handleCheckout());
-        emptyButton.addEventListener('click', () => this.emptyCart());
+        if (showcartButton !== null) {
+            showcartButton.addEventListener('click', () => this.handleShowcart());
+        }
+
+        if (emptyButton !== null) {
+            emptyButton.addEventListener('click', () => this.emptyCart());    
+        }
+
         addButtons.forEach(elem => elem.addEventListener('click', () => {
             this.handleShoppingCartClick(
                 elem.getAttribute('data-cart-add'),
@@ -24,10 +38,23 @@ export default class App extends Component {
                 elem.getAttribute('data-cart-name'),
             )
         }));
+
         removeButtons.forEach(elem => elem.addEventListener('click', () => this.handleRemoveFromShoppingCartClick(elem.getAttribute('data-cart-remove'))));
 
         const initialState = localStorage.getItem('items');
         initialState !== null ? this.setState({ items: JSON.parse(initialState) }) : false;
+    }
+
+    handleShowcart() {
+        this.setState({ isCartShowing: true });
+        const elem = document.querySelector('.sullycartDisplay');
+        elem.classList.add('visible');
+    }
+
+    handleHidecart() {
+        const elem = document.querySelector('.sullycartDisplay');
+        elem.classList.remove('visible');
+        this.setState({ isCartShowing: false });
     }
 
     handleRemoveFromShoppingCartClick(productId) {
@@ -88,10 +115,21 @@ export default class App extends Component {
 
 
     render(props) {
-        const { items } = this.state;
+        const { items, isCartShowing } = this.state;
+        const classNames = isCartShowing ? cx(styles.sullycartWrapper, styles.visible) : styles.sullycartWrapper;
         return (
-            <div>
-                <Cart items={items} />
+            <div className={`${classNames} sullycartDisplay`}>
+                {isCartShowing &&
+                    <div>
+                        <Cart
+                            buttonColor={props.buttonColor}
+                            addToCart={this.handleShoppingCartClick}
+                            removeFromCart={this.handleRemoveFromShoppingCartClick}
+                            items={items} />
+                        <button onClick={() => this.handleCheckout()} style={{backgroundColor: props.buttonColor}} className={styles.sullycartCheckoutBtn}>Proceed to checkout</button>
+                        <span onClick={() => this.handleHidecart()} className={styles.sullycartCloseCart}>Close cart</span>
+                    </div>
+                }
             </div>
         );
     }

@@ -7,22 +7,8 @@
   <title>Widget Template</title>
 
   <style>
-    .preview {
-      width: 100%;
-      max-width: 1100px;
-      margin: 80px auto;
-      border: 1px dashed rgba(0, 0, 0, 0.2);
-      position: relative;
-      padding: 20px;
-    }
-
-    .preview::before {
-      content: 'SHOPPING CART PREVIEW';
-      position: absolute;
-      display: block;
-      top: -18px;
-      font-size: 11px;
-      color: rgba(0, 0, 0, 0.5);
+    body {
+      background: #F9F8F7;
     }
   </style>
 
@@ -54,18 +40,18 @@
 
   <hr />
 
-  <div data-cart-host="sully" class="preview">
+  <div data-cart-host="sullycart">
     <script type="text/props">
     {
       "stripeKey": "pk_live_KsJECrnmyMe4vf6s7SlUZYQO",
       "successUrl": "https://preact-widget.netlify.com/success",
-      "cancelUrl": "https://preact-widget.netlify.com/cancel"
+      "cancelUrl": "https://preact-widget.netlify.com/cancel",
+      "buttonColor": "#ff7675"
     }
     </script>
   </div>
 
-  <button data-cart-checkout>Checkout</button>
-  <button data-cart-empty>Empty cart</button>
+  <button data-cart-show>Show cart</button>
 
   <script src="https://js.stripe.com/v3/"></script>
   <script async src="/bundle.js"></script>
