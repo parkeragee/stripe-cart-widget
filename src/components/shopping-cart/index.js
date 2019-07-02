@@ -10,6 +10,7 @@ export default class App extends Component {
         this.state = {
             items: [],
             isCartShowing: false,
+            totalCartCount: 0,
         };
         this.handleShoppingCartClick = this.handleShoppingCartClick.bind(this);
         this.handleRemoveFromShoppingCartClick = this.handleRemoveFromShoppingCartClick.bind(this);
@@ -40,7 +41,13 @@ export default class App extends Component {
         removeButtons.forEach(elem => elem.addEventListener('click', () => this.handleRemoveFromShoppingCartClick(elem.getAttribute('data-cart-remove'))));
 
         const initialState = localStorage.getItem('items');
-        initialState !== null ? this.setState({ items: JSON.parse(initialState) }) : false;
+
+        if (initialState !== null) {
+            const cartCountElems = document.querySelectorAll('[data-cart-count]');
+            const cartCount = this._getCurrentCartCount(JSON.parse(initialState));
+            cartCountElems.forEach(elem => elem.innerHTML = this._getCurrentCartCount(JSON.parse(initialState)));
+            this.setState({ items: JSON.parse(initialState) });   
+        }
     }
 
     handleShowcart() {
@@ -66,21 +73,41 @@ export default class App extends Component {
         return productIndex > -1 ? this._incrementQuantity(productIndex) : this._addToCart(item);
     }
 
+    _getCurrentCartCount(cartData) {
+        return cartData.length > 0 ? cartData.reduce((previous, item) => previous + item.quantity, 0) : 0;
+    }
+
     _incrementQuantity(productIndex) {
+        this._updateCartCount('increase');
         const newItems = this.state.items.slice();
         ++newItems[productIndex].quantity;
         this._setCartState({ items: newItems });
     }
 
     _decrementQuantity(productIndex) {
-        const newItems = this.state.items.slice();
-        const currentQuantity = newItems[productIndex].quantity;
-        currentQuantity === 1 ? newItems.splice(productIndex, 1) : --newItems[productIndex].quantity;
-        this._setCartState({ items: newItems });
+        if (productIndex > -1) {
+            this._updateCartCount('decrease');
+            const newItems = this.state.items.slice();
+            const currentQuantity = newItems[productIndex].quantity;
+            currentQuantity === 1 ? newItems.splice(productIndex, 1) : --newItems[productIndex].quantity;
+            this._setCartState({ items: newItems });
+        }
     }
 
     _addToCart(item) {
+        this._updateCartCount('increase');
         this._setCartState({ items: [...this.state.items, item] });
+    }
+
+    _updateCartCount(direction) {
+        const { items } = this.state;
+        const cartCountElems = document.querySelectorAll('[data-cart-count]');
+        const currentCount = this._getCurrentCartCount(items);
+        if (direction === 'increase') {
+            cartCountElems.forEach(elem => elem.innerHTML = currentCount + 1);
+        } else if (direction === 'decrease') {
+            cartCountElems.forEach(elem => elem.innerHTML = currentCount > 0 ? currentCount - 1 : 0);
+        }
     }
 
     /**
