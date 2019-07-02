@@ -130,9 +130,11 @@ export default class App extends Component {
                             addToCart={this.handleShoppingCartClick}
                             removeFromCart={this.handleRemoveFromShoppingCartClick}
                             items={items} />
-                        <div className="cart-total"><b>Total: ${this.getCartTotal()}</b></div>
-                        <button onClick={() => this.handleCheckout()} style={{backgroundColor: props.buttonColor}} className={styles.sullycartCheckoutBtn}>Proceed to checkout</button>
-                        <span onClick={() => this.handleHidecart()} className={styles.sullycartCloseCart}>Close cart</span>
+                        <div className={styles.sullycartActions}>
+                            <div className="cart-total"><b>Total: ${this.getCartTotal()}</b></div>
+                            <button onClick={() => this.handleCheckout()} style={{backgroundColor: props.buttonColor}} className={styles.sullycartCheckoutBtn}>Proceed to checkout</button>
+                            <span onClick={() => this.handleHidecart()} className={styles.sullycartCloseCart}>Close cart</span>
+                        </div>
                     </div>
                 }
             </div>
