@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Widget Template</title>
+  <title>Sully Cart</title>
 
   <style>
     body {
@@ -15,6 +15,25 @@
 </head>
 
 <body>
+  <header>
+    <div class="container">
+      <h1>A shopping cart for static websites powered by Stripe Checkout</h1>
+      <code>
+          <div data-cart-host="sullycart">
+            <script type="text/props">
+            {
+              "stripeKey": "<YOUR_PUBLISHABLE_STRIPE_KEY>",
+              "successUrl": "<YOUR_SUCCESS_URL>",
+              "cancelUrl": "<YOUR_CANCEL_URL>",
+              "buttonColor": "<YOUR_BRAND_COLOR_HEX_CODE>"
+            }
+            </script>
+          </div>
+          <script src="https://js.stripe.com/v3/"></script>
+          <script async src="https://cart.sullylabs.com/bundle.js"></script>
+      </code>
+    </div>
+  </header>
   <div data-cart-count></div>
   <div>
     <h4>Duffer Mug</h4>
